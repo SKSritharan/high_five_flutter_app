@@ -35,7 +35,8 @@ class TestScreen extends StatelessWidget {
               child: CameraView(
                 initialDirection: CameraLensDirection.back,
                 onPredictionReceived: (String label, double confidence) {
-                  print('Label: $label, Confidence: $confidence');
+                  controller.predictionAnalyze(label, confidence);
+                  // print('Label: $label, Confidence: $confidence');
                 },
               ),
             ),
@@ -62,14 +63,14 @@ class TestScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCameraStream(CameraController cameraController) {
-    if (!cameraController.value.isInitialized) {
-      return Container(
-        color: Colors.grey, // Placeholder color
-      );
-    }
-    return CameraPreview(cameraController);
-  }
+  // Widget _buildCameraStream(CameraController cameraController) {
+  //   if (!cameraController.value.isInitialized) {
+  //     return Container(
+  //       color: Colors.grey, // Placeholder color
+  //     );
+  //   }
+  //   return CameraPreview(cameraController);
+  // }
 
   Widget _buildHandSignDisplay(String currentHandSign) {
     return Column(
