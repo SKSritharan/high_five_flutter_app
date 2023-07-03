@@ -6,11 +6,13 @@ class TestController extends GetxController {
   RxString currentHandSign = ''.obs;
 
   List<String> levels = ['Done', 'Fist', 'Five', 'Four', 'Three', 'Two', 'One'];
+  RxList passedlevels = [].obs;
 
   void predictionAnalyze(String label, double confidence) {
     currentHandSign.value = levels[currentLevel.value];
     if (currentHandSign.value == label) {
-      score.value++;
+      passedlevels.add(currentHandSign.value);
+      score.value += 20;
       currentLevel.value++;
       update();
     } else {
@@ -19,10 +21,7 @@ class TestController extends GetxController {
     }
   }
 
-  void onMatchGesture() {
-    // Logic to check if the user's hand gesture matches the displayed gesture
-    // Increment the score and move to the next level if it matches
-    score.value++;
+  void skipLevel() {
     currentLevel.value++;
     update(); // Notify listeners that the values have changed
   }
