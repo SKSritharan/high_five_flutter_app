@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:camera/camera.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -44,46 +47,67 @@ class TestScreen extends StatelessWidget {
                     initialDirection: CameraLensDirection.back,
                     onPredictionReceived: (String label, double confidence) {
                       controller.predictionAnalyze(label, confidence);
-                      // print('Label: $label, Confidence: $confidence');
                     },
                   ),
                 ),
                 Expanded(
                   flex: 2,
-                  child: _buildHandSignDisplay(controller.currentHandSign
-                      .value), // Add the hand sign display widget here
+                  child:
+                      _buildHandSignDisplay(controller.currentHandSign.value),
                 ),
-                // Expanded(
-                //   flex: 1,
-                //   child: _buildScoreDisplay(
-                //       controller.score.value), // Add the score display widget here
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.all(16.0),
-                //   child: ElevatedButton(
-                //     onPressed: controller.onMatchGesture,
-                //     child: const Text('Match Gesture'),
-                //   ),
-                // ),
               ],
             );
           } else {
-            return _buildScoreDisplay(
-                controller.score.value); // Add the score display widget here
+            return Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: ConfettiWidget(
+                    confettiController: controller.controllerCenter,
+                    blastDirectionality: BlastDirectionality.explosive,
+                    shouldLoop: true,
+                    colors: const [
+                      Colors.green,
+                      Colors.blue,
+                      Colors.pink,
+                      Colors.orange,
+                      Colors.purple
+                    ],
+                    createParticlePath: drawStar,
+                  ),
+                ),
+                _buildScoreDisplay(controller.score.value)
+              ],
+            );
           }
         }),
       ),
     );
   }
 
-  // Widget _buildCameraStream(CameraController cameraController) {
-  //   if (!cameraController.value.isInitialized) {
-  //     return Container(
-  //       color: Colors.grey, // Placeholder color
-  //     );
-  //   }
-  //   return CameraPreview(cameraController);
-  // }
+  Path drawStar(Size size) {
+    // Method to convert degree to radians
+    double degToRad(double deg) => deg * (pi / 180.0);
+
+    const numberOfPoints = 5;
+    final halfWidth = size.width / 2;
+    final externalRadius = halfWidth;
+    final internalRadius = halfWidth / 2.5;
+    final degreesPerStep = degToRad(360 / numberOfPoints);
+    final halfDegreesPerStep = degreesPerStep / 2;
+    final path = Path();
+    final fullAngle = degToRad(360);
+    path.moveTo(size.width, halfWidth);
+
+    for (double step = 0; step < fullAngle; step += degreesPerStep) {
+      path.lineTo(halfWidth + externalRadius * cos(step),
+          halfWidth + externalRadius * sin(step));
+      path.lineTo(halfWidth + internalRadius * cos(step + halfDegreesPerStep),
+          halfWidth + internalRadius * sin(step + halfDegreesPerStep));
+    }
+    path.close();
+    return path;
+  }
 
   Widget _buildHandSignDisplay(String currentHandSign) {
     return Column(
@@ -91,9 +115,18 @@ class TestScreen extends StatelessWidget {
       children: [
         GetBuilder<TestController>(
           builder: (controller) {
-            return Text(
-              'Level ${controller.currentLevel}',
-              style: const TextStyle(fontSize: 24),
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Level ${controller.currentLevel}',
+                  style: const TextStyle(fontSize: 24),
+                ),
+                Text(
+                  'Score ${controller.score}',
+                  style: const TextStyle(fontSize: 24),
+                ),
+              ],
             );
           },
         ),
