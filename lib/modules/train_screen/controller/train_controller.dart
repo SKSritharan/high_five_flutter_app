@@ -1,6 +1,8 @@
 import 'package:confetti/confetti.dart';
 import 'package:get/get.dart';
 
+import '../../../utils/widgets/custom_snackbar.dart';
+
 class TrainController extends GetxController {
   RxInt currentLevel = 1.obs;
   RxInt score = 0.obs;
@@ -27,6 +29,10 @@ class TrainController extends GetxController {
   void predictionAnalyze(String label, double confidence) {
     currentHandSign.value = levels[currentLevel.value];
     if (currentHandSign.value == label) {
+      showCustomSnackbar(
+        'You have predicted correctly!',
+        SnackType.success,
+      );
       passedlevels.add(currentHandSign.value);
       score.value += 20;
       if (currentLevel.value == 6) {
@@ -40,6 +46,10 @@ class TrainController extends GetxController {
   }
 
   void skipLevel() {
+    showCustomSnackbar(
+      'You skipped level ${currentLevel.value}',
+      SnackType.info,
+    );
     currentLevel.value++;
     if (currentLevel.value == 6) {
       controllerCenter.play();

@@ -12,37 +12,38 @@ void showCustomSnackbar(
   SnackType type, {
   SnackPosition position = SnackPosition.BOTTOM,
   Color? colorText,
-  double? borderRadius,
+  double borderRadius = 10,
   Color? backgroundColor,
 }) {
-  Color? snackColor;
-  Icon? icon;
-  String? title;
+  Color snackColor;
+  IconData iconData;
+  String title;
+
   switch (type) {
     case SnackType.success:
-      String title = 'Success';
+      title = 'Success';
       snackColor = Colors.green;
-      Icon? icon = Icon(Icons.check);
+      iconData = Icons.check;
       break;
     case SnackType.error:
-      String title = 'Error';
+      title = 'Error';
       snackColor = Colors.red;
-      Icon? icon = Icon(Icons.close);
+      iconData = Icons.close;
       break;
     case SnackType.info:
-      String title = 'Info';
+      title = 'Info';
       snackColor = Colors.blue;
-      Icon? icon = Icon(Icons.warning);
+      iconData = Icons.warning;
       break;
   }
 
   Get.snackbar(
-    title!,
+    title,
     message,
     snackPosition: position,
     colorText: colorText ?? Colors.white,
-    borderRadius: borderRadius ?? 10,
+    borderRadius: borderRadius,
     backgroundColor: backgroundColor ?? snackColor,
-    icon: icon,
+    icon: Icon(iconData),
   );
 }
