@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:high_five_flutter_app/utils/widgets/banana_meter.dart';
 
 import '../../utils/widgets/camera_view.dart';
 import 'controller/test_controller.dart';
@@ -55,6 +56,7 @@ class TestScreen extends StatelessWidget {
                   child:
                       _buildHandSignDisplay(controller.currentHandSign.value),
                 ),
+                BananaMeter(controller.predConfidence.value),
               ],
             );
           } else {
@@ -126,6 +128,14 @@ class TestScreen extends StatelessWidget {
                   'Score ${controller.score}',
                   style: const TextStyle(fontSize: 24),
                 ),
+                Text(
+                  '${controller.countdownSeconds}',
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red,
+                  ),
+                ),
               ],
             );
           },
@@ -135,7 +145,7 @@ class TestScreen extends StatelessWidget {
           'Current Hand Sign:',
           style: TextStyle(fontSize: 18),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         GetBuilder<TestController>(
           builder: (controller) {
             return Image.asset(
@@ -166,8 +176,8 @@ class TestScreen extends StatelessWidget {
                 'assets/images/1.png',
                 width: 50.0,
               ),
-              Text('Done'),
-              if (controller.passedlevels.contains('Done'))
+              Text('Five'),
+              if (controller.passedlevels.contains('Five'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -180,8 +190,8 @@ class TestScreen extends StatelessWidget {
                 'assets/images/2.png',
                 width: 50.0,
               ),
-              Text('Fist'),
-              if (controller.passedlevels.contains('Fist'))
+              Text('One'),
+              if (controller.passedlevels.contains('One'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -194,8 +204,8 @@ class TestScreen extends StatelessWidget {
                 'assets/images/3.png',
                 width: 50.0,
               ),
-              Text('Five'),
-              if (controller.passedlevels.contains('Five'))
+              Text('Two'),
+              if (controller.passedlevels.contains('Two'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -208,8 +218,8 @@ class TestScreen extends StatelessWidget {
                 'assets/images/4.png',
                 width: 50.0,
               ),
-              Text('Four'),
-              if (controller.passedlevels.contains('Four'))
+              Text('Done'),
+              if (controller.passedlevels.contains('Done'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -222,8 +232,8 @@ class TestScreen extends StatelessWidget {
                 'assets/images/5.png',
                 width: 50.0,
               ),
-              Text('Three'),
-              if (controller.passedlevels.contains('Three'))
+              Text('Rad'),
+              if (controller.passedlevels.contains('Rad'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),

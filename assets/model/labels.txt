@@ -1,7 +1,6 @@
-Done
-Fist
+None
 Five
-Four
-Three
-Two
 One
+Two
+Done
+Rad

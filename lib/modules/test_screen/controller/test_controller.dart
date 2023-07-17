@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:confetti/confetti.dart';
 import 'package:get/get.dart';
 
@@ -7,8 +9,12 @@ class TestController extends GetxController {
   RxInt currentLevel = 1.obs;
   RxInt score = 0.obs;
   RxString currentHandSign = ''.obs;
+  RxDouble predConfidence = 0.0.obs;
 
-  List<String> levels = ['Done', 'Fist', 'Five', 'Four', 'Three', 'Two', 'One'];
+  RxInt countdownSeconds = 30.obs;
+  late Timer countdownTimer;
+
+  List<String> levels = ['Five', 'One', 'Two', 'Done', 'Rad'];
   RxList passedlevels = [].obs;
 
   late ConfettiController controllerCenter;
@@ -17,6 +23,7 @@ class TestController extends GetxController {
   void onInit() {
     controllerCenter =
         ConfettiController(duration: const Duration(seconds: 10));
+    startPredictionCountdown();
     super.onInit();
   }
 
@@ -27,8 +34,10 @@ class TestController extends GetxController {
   }
 
   void predictionAnalyze(String label, double confidence) {
-    currentHandSign.value = levels[currentLevel.value];
+    currentHandSign.value = levels[(currentLevel.value) - 1];
+    predConfidence.value = confidence;
     if (currentHandSign.value == label) {
+      stopPredictionCountdown();
       showCustomSnackbar(
         'You have passed level ${currentLevel.value}',
         SnackType.success,
@@ -36,13 +45,12 @@ class TestController extends GetxController {
       passedlevels.add(currentHandSign.value);
       score.value += 20;
       currentLevel.value++;
+      startPredictionCountdown();
       if (currentLevel.value == 6) {
+        stopPredictionCountdown();
         controllerCenter.play();
       }
       update();
-    } else {
-      print("Try Again");
-      print("currentHandSign.value = " + currentHandSign.value);
     }
   }
 
@@ -56,5 +64,24 @@ class TestController extends GetxController {
       controllerCenter.play();
     }
     update();
+  }
+
+  void startPredictionCountdown() {
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (countdownSeconds.value > 0) {
+        countdownSeconds.value--;
+      } else {
+        stopPredictionCountdown();
+        currentLevel.value++;
+        startPredictionCountdown();
+      }
+    });
+  }
+
+  void stopPredictionCountdown() {
+    if (countdownTimer.isActive) {
+      countdownTimer.cancel();
+    }
+    countdownSeconds.value = 30;
   }
 }

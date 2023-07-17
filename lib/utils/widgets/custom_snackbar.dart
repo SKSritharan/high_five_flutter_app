@@ -40,6 +40,7 @@ void showCustomSnackbar(
   Get.snackbar(
     title,
     message,
+    duration: const Duration(seconds: 2),
     snackPosition: position,
     colorText: colorText ?? Colors.white,
     borderRadius: borderRadius,

@@ -5,6 +5,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../utils/widgets/banana_meter.dart';
 import '../../utils/widgets/camera_view.dart';
 import './controller/train_controller.dart';
 
@@ -55,6 +56,7 @@ class TrainScreen extends StatelessWidget {
                   child:
                       _buildHandSignDisplay(controller.currentHandSign.value),
                 ),
+                BananaMeter(controller.predConfidence.value),
               ],
             );
           } else {
@@ -166,8 +168,8 @@ class TrainScreen extends StatelessWidget {
                 'assets/images/1.png',
                 width: 50.0,
               ),
-              Text('Done'),
-              if (controller.passedlevels.contains('Done'))
+              Text('Five'),
+              if (controller.passedlevels.contains('Five'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -180,8 +182,8 @@ class TrainScreen extends StatelessWidget {
                 'assets/images/2.png',
                 width: 50.0,
               ),
-              Text('Fist'),
-              if (controller.passedlevels.contains('Fist'))
+              Text('One'),
+              if (controller.passedlevels.contains('One'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -194,8 +196,8 @@ class TrainScreen extends StatelessWidget {
                 'assets/images/3.png',
                 width: 50.0,
               ),
-              Text('Five'),
-              if (controller.passedlevels.contains('Five'))
+              Text('Two'),
+              if (controller.passedlevels.contains('Two'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -208,8 +210,8 @@ class TrainScreen extends StatelessWidget {
                 'assets/images/4.png',
                 width: 50.0,
               ),
-              Text('Four'),
-              if (controller.passedlevels.contains('Four'))
+              Text('Done'),
+              if (controller.passedlevels.contains('Done'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),
@@ -222,8 +224,8 @@ class TrainScreen extends StatelessWidget {
                 'assets/images/5.png',
                 width: 50.0,
               ),
-              Text('Three'),
-              if (controller.passedlevels.contains('Three'))
+              Text('Rad'),
+              if (controller.passedlevels.contains('Rad'))
                 Icon(Icons.check)
               else
                 Icon(Icons.close),

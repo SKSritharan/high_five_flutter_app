@@ -7,8 +7,9 @@ class TrainController extends GetxController {
   RxInt currentLevel = 1.obs;
   RxInt score = 0.obs;
   RxString currentHandSign = ''.obs;
+  RxDouble predConfidence = 0.0.obs;
 
-  List<String> levels = ['Done', 'Fist', 'Five', 'Four', 'Three', 'Two', 'One'];
+  List<String> levels = ['Five', 'One', 'Two', 'Done', 'Rad'];
   RxList passedlevels = [].obs;
 
   late ConfettiController controllerCenter;
@@ -27,7 +28,8 @@ class TrainController extends GetxController {
   }
 
   void predictionAnalyze(String label, double confidence) {
-    currentHandSign.value = levels[currentLevel.value];
+    currentHandSign.value = levels[(currentLevel.value) - 1];
+    predConfidence.value = confidence;
     if (currentHandSign.value == label) {
       showCustomSnackbar(
         'You have predicted correctly!',
@@ -39,9 +41,6 @@ class TrainController extends GetxController {
         controllerCenter.play();
       }
       update();
-    } else {
-      print("Try Again");
-      print("currentHandSign.value = " + currentHandSign.value);
     }
   }
 
