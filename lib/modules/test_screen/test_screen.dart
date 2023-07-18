@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:high_five_flutter_app/utils/widgets/banana_meter.dart';
 
+import '../../routes/app_routes.dart';
 import '../../utils/widgets/camera_view.dart';
 import 'controller/test_controller.dart';
 
@@ -164,9 +165,39 @@ class TestScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Center(
-            child: Text(
-              'Score: $score',
-              style: const TextStyle(fontSize: 24),
+            child: Column(
+              children: [
+                Text(
+                  'Score: $score',
+                  style: const TextStyle(fontSize: 24),
+                ),
+                score < 100
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Icon(
+                            Icons.sentiment_very_dissatisfied,
+                            size: 50,
+                          ),
+                          const Text(
+                            'You only predicted few, you need a training!',
+                            style: TextStyle(
+                                fontSize: 20, color: Colors.redAccent),
+                            textAlign: TextAlign.center,
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Get.offAndToNamed(AppRoutes.trainScreen);
+                            },
+                            child: const Text(
+                              "Get Train Now!",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          )
+                        ],
+                      )
+                    : SizedBox(),
+              ],
             ),
           ),
           Row(
