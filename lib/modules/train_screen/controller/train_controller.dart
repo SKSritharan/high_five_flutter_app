@@ -30,7 +30,7 @@ class TrainController extends GetxController {
   void predictionAnalyze(String label, double confidence) {
     currentHandSign.value = levels[(currentLevel.value) - 1];
     predConfidence.value = confidence;
-    if (currentHandSign.value == label) {
+    if (currentHandSign.value == label && predConfidence.value > 0.9) {
       showCustomSnackbar(
         'You have predicted correctly!',
         SnackType.success,

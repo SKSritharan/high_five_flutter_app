@@ -36,7 +36,7 @@ class TestController extends GetxController {
   void predictionAnalyze(String label, double confidence) {
     currentHandSign.value = levels[(currentLevel.value) - 1];
     predConfidence.value = confidence;
-    if (currentHandSign.value == label) {
+    if (currentHandSign.value == label && predConfidence.value > 0.9) {
       stopPredictionCountdown();
       showCustomSnackbar(
         'You have passed level ${currentLevel.value}',
