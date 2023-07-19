@@ -31,10 +31,6 @@ class TrainController extends GetxController {
     currentHandSign.value = levels[(currentLevel.value) - 1];
     predConfidence.value = confidence;
     if (currentHandSign.value == label && predConfidence.value > 0.9) {
-      showCustomSnackbar(
-        'You have predicted correctly!',
-        SnackType.success,
-      );
       passedlevels.add(currentHandSign.value);
       score.value += 20;
       if (currentLevel.value == 6) {
